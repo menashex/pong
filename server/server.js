@@ -7,6 +7,9 @@ const Game = require('./game');
 const app = express();
 app.use(express.json());
 
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../client')));
+
 app.post('/register', async (req, res) => {
   await register(req.body.username, req.body.password);
   res.send({ ok: true });
