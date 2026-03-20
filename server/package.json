@@ -1,0 +1,11 @@
+{
+  "name": "pingpong-server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "ws": "^8.13.0"
+  }
+}
