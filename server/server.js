@@ -7,12 +7,28 @@ const Game = require('./game');
 const app = express();
 app.use(express.json());
 
+const db = require('./db');
+
+(async () => {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      username TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL
+    );
+  `);
+})();
+
 const path = require('path');
 app.use(express.static(path.join(__dirname, '../client')));
 
 app.post('/register', async (req, res) => {
-  await register(req.body.username, req.body.password);
-  res.send({ ok: true });
+  try {
+    await register(req.body.username, req.body.password);
+    res.send({ ok: true });
+  } catch (e) {
+    res.status(400).send({ error: "User already exists" });
+  }
 });
 
 app.post('/login', async (req, res) => {
